@@ -2,12 +2,6 @@
 var Enemy = function(x,y,speed) {
     // 要应用到每个敌人的实例的变量写在这里
     // 我们已经提供了一个来帮助你实现更多
-
-    //Enemy 函数，它通过以下操作初始化 Enemy：
-    // 通过将 this.sprite 设为 images 文件夹（已经提供）中的相应图片来加载图片
-    // 设置 Enemy 初始位置（需要由你执行）
-    // 设置 Enemy 速度（需要由你执行）
-
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -16,16 +10,11 @@ var Enemy = function(x,y,speed) {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Enemy 函数的 update 方法
-// 更新 Enemy 位置（需要由你执行）
-// 处理碰撞玩家的部分（需要由你执行）
-// 你可以根据需要添加自己的 Enemy 方法
-// 此为游戏必须的函数，用来更新敌人的位置
-// 参数: dt ，表示时间间隙
 Enemy.prototype.update = function(dt) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
-    // this.x = this.x +
+    this.x = this.x + this.speed * dt;
+    this.checkCollision(player);
 };
 
 // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -33,13 +22,21 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Enemy.prototype.checkCollision = function(player){
+  if(Math.abs(this.y - player.y)<=100 && Math.abs(this.x - player.x) <= 100){
+    console.log(`collision happened! enemy.x:${this.x}, player.x:${player.x}`)
+  }else{
+    console.log(`player's safe! enemy.x:${this.x}, player.x:${player.x}`)
+  }
 
-
+}
 
 
 // 现在实现你自己的玩家类
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
-var Player = function() {
+var Player = function(x, y) {
+    this.x = x;
+    this.y = y;
     this.sprite = 'images/char-boy.png';
 }
 
@@ -51,18 +48,28 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-Player.prototype.handleInput() = function(){
-
+// 奇怪的数字待看
+Player.prototype.handleInput = function(movement){
+  switch(movement){
+    case 'left': this.x -= 101; break;
+    case 'right': this.x +=101; break;
+    case 'up': this.y -= 83; break;
+    case 'down': this.y +=83; break;
+  }
 }
+/*
+现在实例化你的所有对象
+把所有敌人的对象都放进一个叫 allEnemies 的数组里面
+把玩家对象放进一个叫 player 的变量里面
+player = new Player(202,405);
+enemy1 = new Enemy(1,55,500);
+enemy2 = new Enemy(1,145,420);
+enemy3 = new Enemy(1,225,450);
 
-// 现在实例化你的所有对象
-// 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
-// 把玩家对象放进一个叫 player 的变量里面
-player = new Player();
-enemy1 = new Enemy();
-enemy2 = new Enemy();
-
-allEnemies = [enemy1, enemy2]
+allEnemies = [enemy1, enemy2, enemy3]
+*/
+var allEnemies = [new Enemy(202, 83 * 2 + 55, 0)]
+var player = new Player(302, 83 * 2 + 55)
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Player.handleInput()
 // 方法里面。你不需要再更改这段代码了。
