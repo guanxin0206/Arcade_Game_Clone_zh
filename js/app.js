@@ -1,3 +1,6 @@
+const CELL_WIDTH = 101;
+const CELL_HEIGHT = 83;
+
 // 这是我们的玩家要躲避的敌人
 var Enemy = function(x,y,speed) {
     // 要应用到每个敌人的实例的变量写在这里
@@ -15,6 +18,8 @@ Enemy.prototype.update = function(dt) {
     // 都是以同样的速度运行的
     this.x = this.x + this.speed * dt;
     this.checkCollision(player);
+      //player.update();
+
 };
 
 // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -23,13 +28,14 @@ Enemy.prototype.render = function() {
 };
 
 Enemy.prototype.checkCollision = function(player){
-  if(Math.abs(this.y - player.y)<=100 && Math.abs(this.x - player.x) <= 100){
-    console.log(`collision happened! enemy.x:${this.x}, player.x:${player.x}`)
+  //碰撞半径 50
+  if(Math.abs(this.y - player.y) <= 50 && Math.abs(this.x - player.x) <= 50){
+    return true;
   }else{
-    console.log(`player's safe! enemy.x:${this.x}, player.x:${player.x}`)
+    return false;
   }
-
 }
+
 
 
 // 现在实现你自己的玩家类
@@ -40,7 +46,13 @@ var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
 }
 
+Player.prototype.reset = function(){
+  this.x = 202;
+  this.y = 405;
+}
+
 Player.prototype.update = function(dt){
+  
 
 }
 
