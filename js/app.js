@@ -3,6 +3,12 @@ const CELL_HEIGHT = 83;
 
 const DOLL_WIDTH = 66;
 const DOLL_HEIGHT = 81;
+const winDisplay = document.getElementById('win')
+const lossDisplay = document.getElementById('loss')
+
+var win = 0;
+var loss = 0;
+
 
 // 这是我们的玩家要躲避的敌人
 var Enemy = function(x,y,speed) {
@@ -54,12 +60,25 @@ Player.prototype.reset = function(){
   this.y = DOLL_HEIGHT * 5;
 }
 
-Player.prototype.update = function(dt){
-  //player reset after 1 second when reaching the river
+Player.prototype.update = function(){
+  //player resets after winning is confirmed
+    if(this.checkWin()){
+      //if setTimeout function is used, it would mess up with my win counts
+      player.reset()
+    }
+}
+
+Player.prototype.checkWin = function(){
+
   if(this.y < DOLL_HEIGHT-10){
-    setTimeout(function(){player.reset();},1000)
+    win += 1;
+    winDisplay.innerText = win;
+    return true;
   }
-  //console.log(this.x + ',' + this.y);
+  else{
+    return false;
+  }
+
 }
 
 Player.prototype.render = function(){
@@ -85,8 +104,6 @@ Player.prototype.handleInput = function(movement){
          if (this.y <= 405 - DOLL_HEIGHT) {
              this.y += 83;
           } break;
-        // case 'up': this.y -= 83; break;
-        // case 'down': this.y += 83; break;
     }
     console.log(this.x + ", " + this.y)
 }

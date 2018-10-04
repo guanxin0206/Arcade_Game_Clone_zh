@@ -85,6 +85,8 @@ var Engine = (function(global) {
       //console.log("collides:" + collides);
       if (collides) {
          player.reset()
+         loss += 1;
+         lossDisplay.innerText = loss;
       }
     };
 
