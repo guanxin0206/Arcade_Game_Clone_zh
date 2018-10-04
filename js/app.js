@@ -20,7 +20,9 @@ Enemy.prototype.update = function(dt) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
     this.x = this.x + this.speed * dt;
-    //this.checkCollision(player);
+    if(this.x > CELL_WIDTH * 5 + DOLL_WIDTH){
+      this.x = 0;
+    }
 };
 
 // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -92,20 +94,14 @@ Player.prototype.handleInput = function(movement){
 现在实例化你的所有对象
 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
 把玩家对象放进一个叫 player 的变量里面
-player = new Player(202,405);
+*/
+player = new Player();
 enemy1 = new Enemy(1,55,500);
 enemy2 = new Enemy(1,145,420);
 enemy3 = new Enemy(1,225,450);
 
 allEnemies = [enemy1, enemy2, enemy3]
-*/
-enemy1 = new Enemy(1,0,0);
-enemy2 = new Enemy(1,145,0);
-//enemy3 = new Enemy(1,225,450);
-var allEnemies = [new Enemy(202, 83 * 2 + 55, 0)]
-allEnemies.push(enemy1,enemy2)
-//var player = new Player(302, 83 * 2 + 55)
-var player = new Player()
+
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Player.handleInput()
 // 方法里面。你不需要再更改这段代码了。
