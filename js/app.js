@@ -66,6 +66,15 @@ Player.prototype.update = function(){
       //if setTimeout function is used, it would mess up with my win counts
       player.reset()
     }
+
+    if(win>=10){
+      alert("You have won!");
+
+    }
+    if(loss>=10){
+      alert("You have lost the Game! Sorry!");
+
+    }
 }
 
 Player.prototype.checkWin = function(){
@@ -105,7 +114,7 @@ Player.prototype.handleInput = function(movement){
              this.y += 83;
           } break;
     }
-    console.log(this.x + ", " + this.y)
+    
 }
 /*
 现在实例化你的所有对象
